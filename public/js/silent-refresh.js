@@ -25,9 +25,7 @@ function showAccessToken() {
 
 function whenTheTokenWillExpire() {
     let expirationDate = new Date(0);
-    // let expirationDate = new Date();
     expirationDate.setUTCSeconds(parseJwt(access_token).exp); //This is the date when the token will expire
-    // console.log(`The token expires at ${expirationDate}`);
 
     interval = setInterval(function () {
         let date_now = new Date();
@@ -64,7 +62,7 @@ element('btnCallAPI').addEventListener('click', async () => {
         headers: {
             'Authorization': `Bearer ${access_token}`
         }
-    }).then(async response => {
+    }).then(async (response) => {
 
         let json = await response.json();
         result.innerHTML = JSON.stringify(json, undefined, 2);
@@ -82,7 +80,6 @@ element('btnSilentRefresh').addEventListener('click', silentRefresh);
 
 function silentRefresh() {
 
-    console.log('[silentRefresh]');
     const iframe_id = 'silent-refresh-iframe';
 
     //Remove iframe if exists
@@ -96,13 +93,13 @@ function silentRefresh() {
     iframe.id = iframe_id;
 
     //create login URL
-    const Authorization_Endpoint = 'https://login.microsoftonline.com/7a8513af-dca8-4b25-b005-42d3a863dd07/oauth2/authorize';
-    const Response_Type = 'token';
-    const Client_Id = 'd852e25c-c446-4f62-ba08-ae17e7d2f85b';
+    const Authorization_Endpoint = `https://login.microsoftonline.com/${config.tenantId}/oauth2/authorize?`;
+    const Response_Type = config.response_type;
+    const Client_Id = config.client_id;
     const Redirect_Uri = window.location.origin + '/silent-refresh.html';
-    const Scope = 'https://graph.microsoft.com/User.Read';
-    const Resource = 'https://graph.microsoft.com/';
-    const State = 'ThisIsMyStateValue';
+    const Scope =  config.scope;
+    const Resource = config.resource;
+    const State = config.state;
     const Prompt = 'none';
 
     const url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${Client_Id}&redirect_uri=${Redirect_Uri}&scope=${Scope}&resource=${Resource}&state=${State}&prompt=${Prompt}`;

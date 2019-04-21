@@ -25,11 +25,11 @@
             <div class="card-body">
                 <p class="card-text text-right"><i>Your token will expire in: </i><span id="expiresAt"></span>
                 </p>
+                <input id="btnSilentRefresh" type="submit" class="btn btn-primary float-right" value="Silent refresh" />
                 <p class="card-text">This is your access token:</p>
                 <pre id="access_token" class="language-json"></pre>
                 <p class="card-text">You can now call Microsoft Graph API.</p>
                 <div class="text-center">
-                    <input id="btnSilentRefresh" type="submit" class="btn btn-primary" value="Silent refresh" />
                     <input id="btnCallAPI" type="submit" class="btn btn-primary" value="Call Microsoft Graph API" />
                 </div>
                 <pre id="result" style="display: none" class="language-json"></pre>
@@ -40,7 +40,6 @@
 </div>
 
 <% include partials/footer %>
-
 <script src="/js/silent-refresh.js"></script>
 
 </body>
