@@ -75,6 +75,10 @@ element('btnCallAPI').addEventListener('click', async () => {
 
 });
 
+function getUpn() {
+    return parseJwt(access_token).upn;
+}
+
 //Use to refresh the token
 element('btnSilentRefresh').addEventListener('click', silentRefresh);
 
@@ -97,12 +101,13 @@ function silentRefresh() {
     const Response_Type = config.response_type;
     const Client_Id = config.client_id;
     const Redirect_Uri = window.location.origin + '/silent-refresh.html';
-    const Scope =  config.scope;
+    const Scope = config.scope;
     const Resource = config.resource;
     const State = config.state;
     const Prompt = 'none';
+    const Upn = getUpn();
 
-    const url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${Client_Id}&redirect_uri=${Redirect_Uri}&scope=${Scope}&resource=${Resource}&state=${State}&prompt=${Prompt}`;
+    const url = `${Authorization_Endpoint}?response_type=${Response_Type}&client_id=${Client_Id}&redirect_uri=${Redirect_Uri}&scope=${Scope}&resource=${Resource}&state=${State}&prompt=${Prompt}&login_hint=${Upn}`;
 
     iframe.setAttribute('src', url);
 
